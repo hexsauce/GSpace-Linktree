@@ -1,10 +1,12 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #d1b43a, #d1b43a);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5)50%, rgba(0, 0, 0, 0.5)50%), url(assets/bg.gif);
+  background-position: center;
+  background-size: cover;
   text-align: center;
   margin: 0;
   padding: 0;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +23,6 @@ body {
 
 @media only screen and (max-width: 1300px) {
   .container {
-    margin-top: 50px;
     min-width: 80vw;
   }
 }
