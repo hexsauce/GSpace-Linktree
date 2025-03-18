@@ -4,11 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GSpace Links </title>
+  <title>GSpace Links</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/x-icon" href="./assets/logo-transparent.png">
 </head>
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7XNXM6JTFQ"></script>
 <script>
@@ -18,14 +17,19 @@
     dataLayer.push(arguments);
   }
   gtag('js', new Date());
-
   gtag('config', 'G-7XNXM6JTFQ');
 </script>
 
 <body>
-  <div class="container">
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splashScreen">
+    <video class="splash-video" autoplay muted playsinline>
+      <!-- Empty source - will be set by JavaScript -->
+    </video>
+  </div>
+  <!-- Main Content -->
+  <div class="container" id="mainContent">
     <img src="./assets/logo.jpg" alt="logo" class="logo">
-
     <div class="links">
       <a href="#" class="link">✨ Services</a>
       <a href="#" class="link">📦 Products</a>
@@ -34,6 +38,57 @@
       <a href="https://www.google.com/maps/place/Gloria+Perfect+Aesthetics+Sdn+Bhd/@5.9379447,116.0991648,17z/data=!3m1!4b1!4m6!3m5!1s0x323b68ee0d1019db:0x2f4a5f858e821f5b!8m2!3d5.9379394!4d116.1017397!16s%2Fg%2F1hc1m4vp7?entry=ttu&g_ep=EgoyMDI1MDMxMS4wIKXMDSoASAFQAw%3D%3D" class="link" target="_blank">🗺️ HQ Location</a>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const splashScreen = document.getElementById("splashScreen");
+      const mainContent = document.getElementById("mainContent");
+      const video = document.querySelector(".splash-video");
+
+      // Set video source based on screen size
+      if (window.innerWidth > 800) {
+        // For desktop
+        video.src = "./assets/splash-video.mp4";
+      } else {
+        // For mobile - always use cover to avoid black bars
+        video.src = "./assets/splash-video-mobile.mp4";
+
+        // Force cover mode and remove any automatic switching
+        video.style.objectFit = "cover";
+      }
+
+      // Need to load the video after setting the source
+      video.load();
+
+      // Play the video after loading it
+      video.play().catch(error => {
+        console.log("Auto-play prevented:", error);
+        // If autoplay fails, simply fade out the splash screen
+        fadeOutSplash();
+      });
+
+      // When the video ends, fade out the splash screen
+      video.addEventListener("ended", function() {
+        fadeOutSplash();
+      });
+
+      // Fallback: If video doesn't play or has issues, fade out after 5 seconds
+      setTimeout(function() {
+        if (!video.ended) {
+          fadeOutSplash();
+        }
+      }, 5000);
+
+      function fadeOutSplash() {
+        splashScreen.style.opacity = "0";
+        mainContent.style.opacity = "1";
+
+        // Remove splash screen from DOM after fade out completes
+        setTimeout(function() {
+          splashScreen.style.display = "none";
+        }, 100);
+      }
+    });
+  </script>
 </body>
 
 </html>
